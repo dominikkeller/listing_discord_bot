@@ -13,6 +13,7 @@ var localStorage = new LocalStorage("./offers");
 const SLUG = process.env.SLUG;
 const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
 const USERNAME = process.env.USERNAME;
+const CHANNEL_ID = process.env.CHANNEL_ID;
 
 // options
 const options = {
@@ -71,7 +72,7 @@ async function checkNewOffers(data) {
 
   savedOffers.forEach(async (offer) => {
     if (!(data.filter((t) => t.tokenId === offer.tokenId).length > 0)) {
-      const channel = await client.channels.fetch("961995338670047325");
+      const channel = await client.channels.fetch(CHANNEL_ID);
       channel.send(
         `${offer.name} for ${offer.floorPrice.amount} ETH: => ${offer.offerUrl} \r\n`
       );
