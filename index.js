@@ -6,9 +6,8 @@ require("dotenv").config(); //initialize dotenv
 
 if (typeof localStorage === "undefined" || localStorage === null) {
   var LocalStorage = require("node-localstorage").LocalStorage;
-  localStorage = new LocalStorage("./scratch");
+  var localStorage = new LocalStorage("./offers");
 }
-var localStorage = new LocalStorage("./offers");
 
 const SLUG = process.env.SLUG;
 const CLIENT_TOKEN = process.env.CLIENT_TOKEN;
@@ -37,8 +36,8 @@ client.on("ready", async () => {
     try {
       let result = await OpenseaScraper.offers(SLUG, options);
       const upToDateOffers = result.offers;
-      await saveOffers(upToDateOffers);
       await checkNewOffers(upToDateOffers);
+      await saveOffers(upToDateOffers);
     } catch (e) {
       console.log(e.toString());
     }
